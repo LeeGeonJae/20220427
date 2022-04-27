@@ -25,6 +25,21 @@ AFloor::AFloor()
 
 		KillPoint = ScenePos - (XBounds * 0.5f);
 		SpawnPoint = (ScenePos * -1) + (XBounds * 0.5f);
+
+		for (int i = 0; i < NumRepeatingMesh; ++i)
+		{
+
+			FString SceneName = "Scene" + FString::FromInt(i);
+			FName SceneID = FName(*SceneName);
+			USceneComponent* thisScene = CreateDefaultSubobject<USceneComponent>(SceneID);
+			check(thisScene);
+
+			thisScene->AttachTo(RootComponent);
+			thisScene->SetRelativeLocation(FVector(ScenePos, 0.0f, 0.0f));
+			ScenePos += XBounds;
+
+			FloorMeshScenes.Add(thisScene);
+		}
 	}
 }
 
